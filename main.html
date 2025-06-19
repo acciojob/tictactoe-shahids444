@@ -5,29 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0;
+            padding: 20px;
         }
 
         .container {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
         }
 
         .player-setup {
@@ -39,119 +26,89 @@
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 2em;
+            margin-bottom: 20px;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #555;
+            margin-bottom: 5px;
             font-weight: bold;
-            font-size: 1.1em;
         }
 
         input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            width: 200px;
+            padding: 8px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         #submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
             margin-top: 10px;
         }
 
         #submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            background-color: #0056b3;
         }
 
         .message {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 20px;
             font-weight: bold;
-            min-height: 30px;
+            min-height: 25px;
         }
 
         .board {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 300px;
-            margin: 0 auto;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
         }
 
         .cell {
-            width: 90px;
-            height: 90px;
-            border: 3px solid #333;
-            border-radius: 8px;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             cursor: pointer;
-            background: #f8f9fa;
-            transition: all 0.2s ease;
+            background-color: #f9f9f9;
         }
 
-        .cell:hover:not(.taken) {
-            background: #e9ecef;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .cell.taken {
-            cursor: not-allowed;
-        }
-
-        .cell.x {
-            color: #e74c3c;
-        }
-
-        .cell.o {
-            color: #3498db;
+        .cell:hover {
+            background-color: #e9e9e9;
         }
 
         .reset-btn {
-            background: #28a745;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             margin-top: 20px;
-            transition: background-color 0.3s ease;
         }
 
         .reset-btn:hover {
-            background: #218838;
+            background-color: #218838;
         }
     </style>
 </head>
@@ -161,14 +118,14 @@
         <div class="player-setup">
             <h1>Tic Tac Toe</h1>
             <div class="input-group">
-                <label for="player-1">Player 1 Name:</label>
-                <input type="text" id="player-1" placeholder="Enter Player 1 name">
+                <label for="player-1">Player 1:</label>
+                <input type="text" id="player-1" placeholder="Enter name">
             </div>
             <div class="input-group">
-                <label for="player-2">Player 2 Name:</label>
-                <input type="text" id="player-2" placeholder="Enter Player 2 name">
+                <label for="player-2">Player 2:</label>
+                <input type="text" id="player-2" placeholder="Enter name">
             </div>
-            <button id="submit">Start Game</button>
+            <button id="submit">Submit</button>
         </div>
 
         <!-- Game Board Section -->
@@ -186,7 +143,7 @@
                 <div class="cell" id="8"></div>
                 <div class="cell" id="9"></div>
             </div>
-            <button class="reset-btn" onclick="resetGame()">New Game</button>
+            <button class="reset-btn" onclick="resetGame()">Reset Game</button>
         </div>
     </div>
 
@@ -208,28 +165,21 @@
             [2, 4, 6]
         ];
 
-        // Start game when submit button is clicked
         document.getElementById('submit').addEventListener('click', function() {
-            const p1Input = document.getElementById('player-1');
-            const p2Input = document.getElementById('player-2');
-            
-            player1Name = p1Input.value.trim();
-            player2Name = p2Input.value.trim();
+            player1Name = document.getElementById('player-1').value.trim();
+            player2Name = document.getElementById('player-2').value.trim();
             
             if (player1Name === '' || player2Name === '') {
-                alert('Please enter names for both players!');
+                alert('Please enter names for both players');
                 return;
             }
             
-            // Hide setup and show game board
             document.querySelector('.player-setup').style.display = 'none';
             document.querySelector('.game-board').style.display = 'block';
             
-            // Set initial message
             updateMessage();
         });
 
-        // Add click event to all cells
         document.querySelectorAll('.cell').forEach(cell => {
             cell.addEventListener('click', handleCellClick);
         });
@@ -242,14 +192,17 @@
                 return;
             }
             
-            gameState[cellIndex] = currentPlayer === 1 ? 'X' : 'O';
-            e.target.textContent = gameState[cellIndex];
-            e.target.classList.add('taken');
-            e.target.classList.add(gameState[cellIndex].toLowerCase());
+            if (currentPlayer === 1) {
+                gameState[cellIndex] = 'x';
+                e.target.textContent = 'x';
+            } else {
+                gameState[cellIndex] = 'o';
+                e.target.textContent = 'o';
+            }
             
             if (checkWin()) {
                 const winner = currentPlayer === 1 ? player1Name : player2Name;
-                document.querySelector('.message').textContent = `${winner} congratulations you won!`;
+                document.querySelector('.message').textContent = winner + ' congratulations you won!';
                 gameActive = false;
                 return;
             }
@@ -267,15 +220,14 @@
         function updateMessage() {
             if (gameActive) {
                 const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
-                document.querySelector('.message').textContent = `${currentPlayerName}, you're up`;
+                document.querySelector('.message').textContent = currentPlayerName + ', you\'re up';
             }
         }
 
         function checkWin() {
             return winningConditions.some(condition => {
-                return condition.every(index => {
-                    return gameState[index] === (currentPlayer === 1 ? 'X' : 'O');
-                });
+                const [a, b, c] = condition;
+                return gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c];
             });
         }
 
@@ -290,7 +242,6 @@
             
             document.querySelectorAll('.cell').forEach(cell => {
                 cell.textContent = '';
-                cell.classList.remove('taken', 'x', 'o');
             });
             
             updateMessage();
