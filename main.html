@@ -1,134 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tic Tac Toe</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe</title>
 
-    <!-- ─── Styles ──────────────────────────────────────────────── -->
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: #fff;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, .1);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-
-        /* ── Player‑setup section ── */
-        .player-setup { display: block; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 1.05em; color: #555; }
-        input[type="text"] {
-            width: 100%; padding: 12px;
-            font-size: 16px;
-            border: 2px solid #ddd; border-radius: 8px;
-            transition: border-color .3s;
-        }
-        input[type="text"]:focus {
-            outline: none; border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102, 126, 234, .2);
-        }
-        #submit {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 15px 30px;
-            border: none; border-radius: 8px;
-            font-size: 18px; color: #fff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            cursor: pointer; transition: .2s;
-        }
-        #submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, .4); }
-
-        /* ── Game‑board section ── */
-        .game-board { display: none; }
-        h1 { color: #333; margin-bottom: 30px; font-size: 2.2em; }
-        .message { min-height: 30px; font-size: 1.3em; font-weight: bold; margin-bottom: 25px; color: #333; }
-
-        .board {
-            margin: 0 auto;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-            max-width: 300px;
-        }
-        .cell {
-            width: 90px; height: 90px;
-            border: 3px solid #333;
-            border-radius: 8px;
-            background: #f8f9fa;
-            font-size: 2.5em; font-weight: bold;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: .2s;
-        }
-        .cell:hover:not(.taken) { background: #e9ecef; transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
-        .cell.taken { cursor: not-allowed; }
-        .cell.x { color: #e74c3c; }
-        .cell.o { color: #3498db; }
-
-        .reset-btn {
-            margin-top: 25px; padding: 12px 25px;
-            border: none; border-radius: 8px;
-            font-size: 16px; color: #fff;
-            background: #28a745; cursor: pointer; transition: background-color .3s;
-        }
-        .reset-btn:hover { background: #218838; }
-    </style>
+  <!-- Styles kept inline for brevity -->
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      min-height:100vh;display:flex;justify-content:center;align-items:center;
+    }
+    .container{
+      background:#fff;border-radius:15px;padding:40px;width:90%;max-width:500px;
+      box-shadow:0 15px 35px rgba(0,0,0,.1);text-align:center;
+    }
+    /* player‑setup */
+    .input-group{margin-bottom:20px;}
+    label{display:block;margin-bottom:8px;font-weight:bold;color:#555;}
+    input[type="text"]{
+      width:100%;padding:12px;font-size:16px;border:2px solid #ddd;border-radius:8px;
+      transition:border-color .3s;
+    }
+    input[type="text"]:focus{outline:none;border-color:#667eea;
+      box-shadow:0 0 10px rgba(102,126,234,.2);}
+    #submit{
+      margin-top:10px;padding:15px 30px;border:none;border-radius:8px;
+      font-size:18px;color:#fff;cursor:pointer;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      transition:.2s;
+    }
+    #submit:hover{transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(102,126,234,.4);}
+    /* board */
+    .game-board{display:none;}
+    .message{min-height:30px;font-size:1.3em;font-weight:bold;margin-bottom:25px;color:#333;}
+    .board{
+      margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:300px;
+    }
+    .cell{
+      width:90px;height:90px;border:3px solid #333;border-radius:8px;
+      background:#f8f9fa;font-size:2.5em;font-weight:bold;display:flex;
+      justify-content:center;align-items:center;cursor:pointer;transition:.2s;
+    }
+    .cell:hover:not(.taken){background:#e9ecef;transform:scale(1.05);
+      box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .cell.taken{cursor:not-allowed;}
+    .cell.x{color:#e74c3c;}
+    .cell.o{color:#3498db;}
+    #reset{
+      margin-top:25px;padding:12px 25px;border:none;border-radius:8px;font-size:16px;
+      color:#fff;background:#28a745;cursor:pointer;transition:background-color .3s;
+    }
+    #reset:hover{background:#218838;}
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <!-- ─── Player name inputs ─── -->
-        <div class="player-setup">
-            <h1>Tic Tac Toe</h1>
+  <div class="container">
+    <!-- ── Player name inputs ── -->
+    <div class="player-setup">
+      <h1>Tic Tac Toe</h1>
 
-            <div class="input-group">
-                <label for="player-1">Player 1 Name:</label>
-                <input type="text" id="player-1" placeholder="Enter Player 1 name" />
-            </div>
+      <div class="input-group">
+        <label for="player1">Player 1 Name:</label>
+        <input type="text" id="player1" placeholder="Enter Player 1 name" />
+      </div>
 
-            <div class="input-group">
-                <label for="player-2">Player 2 Name:</label>
-                <input type="text" id="player-2" placeholder="Enter Player 2 name" />
-            </div>
+      <div class="input-group">
+        <label for="player2">Player 2 Name:</label>
+        <input type="text" id="player2" placeholder="Enter Player 2 name" />
+      </div>
 
-            <button id="submit">Start Game</button>
-        </div>
-
-        <!-- ─── Game board ─── -->
-        <div class="game-board">
-            <h1>Tic Tac Toe</h1>
-            <div class="message"></div>
-
-            <div class="board">
-                <!-- 1…9 cells -->
-                <div class="cell" id="1"></div>
-                <div class="cell" id="2"></div>
-                <div class="cell" id="3"></div>
-                <div class="cell" id="4"></div>
-                <div class="cell" id="5"></div>
-                <div class="cell" id="6"></div>
-                <div class="cell" id="7"></div>
-                <div class="cell" id="8"></div>
-                <div class="cell" id="9"></div>
-            </div>
-
-            <button class="reset-btn" id="reset">New Game</button>
-        </div>
+      <button id="submit" type="button">Start Game</button>
     </div>
 
-    <!-- ─── External JS ─── -->
-    <script src="script.js"></script>
+    <!-- ── Game board ── -->
+    <div class="game-board">
+      <h1>Tic Tac Toe</h1>
+      <div class="message"></div>
+
+      <div class="board">
+        <div class="cell" id="1"></div>
+        <div class="cell" id="2"></div>
+        <div class="cell" id="3"></div>
+        <div class="cell" id="4"></div>
+        <div class="cell" id="5"></div>
+        <div class="cell" id="6"></div>
+        <div class="cell" id="7"></div>
+        <div class="cell" id="8"></div>
+        <div class="cell" id="9"></div>
+      </div>
+
+      <button id="reset" type="button">New Game</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
